@@ -118,7 +118,7 @@ def training(number_iterations):
         backpropagation(f_h,f_h_prime,f_y,f_y_prime)
         if(i%10 == 0):
             error_list.append(error(f_y,target))
-    fig = plt.plot(error_list,'x')
+    plt.plot(error_list,'x')
     plt.show()
         
 
@@ -132,7 +132,7 @@ print("Weights1:")
 print(weights1)
 print("Weights2:")
 print(weights2)
-training(1)
+#training(1)
 print()
 print("Weights after backpropagation:")
 print("Weights1:")
@@ -141,6 +141,15 @@ print("Weights2:")
 print(weights2)
 print("bias1",bias1)
 
+shape_input = (1,8)
+augmented_input_shape = (1,9)
+total_input = np.eye(shape_input[1])
+random_index = np.random.randint(0,shape_input[1])
+x_input = total_input[random_index].reshape(shape_input)
+print(x_input)
+#print(np.append(x_input,1))
+test = np.append(x_input,1).reshape(augmented_input_shape)
+print(test)
 
 
     
