@@ -1,4 +1,6 @@
 import numpy as np 
+import matplotlib.pyplot as plt
+
 
 def sigmoid(x):
     return 1/(1+np.exp(-x))
@@ -13,6 +15,8 @@ def cost(prediction,actual):
 def error(target,prediction):
     return 0.5*np.sum(np.square(prediction-target))
 
+counter = 0
+
 epsilon = 0.01
 mean_normal = 0
 variance_normal = epsilon**2
@@ -24,7 +28,7 @@ shape_z1 = (1,3)
 shape_w2 = (3,8)
 bias1 = np.random.normal(loc=mean_normal,scale=variance_normal)
 bias2 = np.random.normal(loc=mean_normal,scale=variance_normal)
-learning_rate = 0.01
+learning_rate = 1
 lambd = 0.001
 weights1 = np.random.normal(loc=mean_normal,scale=variance_normal,size=shape_w1)
 weights2 = np.random.normal(loc=mean_normal,scale=variance_normal,size=shape_w2)
@@ -110,12 +114,16 @@ def backpropagation(x_input,f_h,f_h_prime,f_y,f_y_prime):
 def training(number_iterations):
     global weights1
     global weights2
+    global counter
     error_list = []
     rmse_list = []
     total_input = np.eye(shape_input[1])
     for i in range(number_iterations):
-        random_index = np.random.randint(0,shape_input[1])
-        x_input = total_input[random_index].reshape(shape_input)
+#        random_index = np.random.randint(0,shape_input[1])
+        x_input = total_input[counter].reshape(shape_input)
+        counter += 1
+        if (counter == 8):
+            counter = 0
         target = x_input
         f_h,f_h_prime,f_y,f_y_prime = forward_propagation(x_input,weights1,weights2)
         backpropagation(x_input,f_h,f_h_prime,f_y,f_y_prime)
