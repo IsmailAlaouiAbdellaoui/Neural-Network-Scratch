@@ -26,10 +26,12 @@ shape_w1 = (8,3)
 
 shape_z1 = (1,3)
 shape_w2 = (3,8)
-bias1 = np.random.normal(loc=mean_normal,scale=variance_normal)
-bias2 = np.random.normal(loc=mean_normal,scale=variance_normal)
-learning_rate = 1
-lambd = 0.001
+#bias1 = np.random.normal(loc=mean_normal,scale=variance_normal)
+#bias2 = np.random.normal(loc=mean_normal,scale=variance_normal)
+bias1 = 1
+bias2 = 1
+learning_rate = 0.5
+lambd = 0.0001
 weights1 = np.random.normal(loc=mean_normal,scale=variance_normal,size=shape_w1)
 weights2 = np.random.normal(loc=mean_normal,scale=variance_normal,size=shape_w2)
 
@@ -117,6 +119,7 @@ def training(number_iterations):
     global counter
     error_list = []
     rmse_list = []
+    mse_list = []
     total_input = np.eye(shape_input[1])
     for i in range(number_iterations):
 #        random_index = np.random.randint(0,shape_input[1])
@@ -127,19 +130,23 @@ def training(number_iterations):
         target = x_input
         f_h,f_h_prime,f_y,f_y_prime = forward_propagation(x_input,weights1,weights2)
         backpropagation(x_input,f_h,f_h_prime,f_y,f_y_prime)
-        if(i%50 == 0):
+        if(i%100 == 0):
             difference_error = error(f_y,target)
 #            print(er)
             error_list.append(difference_error)
             rmse = np.sqrt(np.mean(np.power(f_y-target,2)))
+            mse = np.mean(np.power(f_y-target,2))
             rmse_list.append(rmse)
-#    fig = plt.plot(error_list)
+            mse_list.append(mse)
+#            print(rmse)
+#    plt.plot(error_list)
     plt.plot(rmse_list)
+#    plt.plot(mse_list)
     plt.show()
 
 
 
-training(1000)
+training(50000)
 
 
     
