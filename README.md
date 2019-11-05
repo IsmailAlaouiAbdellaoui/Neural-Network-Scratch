@@ -1,2 +1,2 @@
-# SAE
+# Sparse AutoEncoder
 
